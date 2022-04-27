@@ -23,13 +23,7 @@ sys_exit(void)
 int
 sys_wait(void)
 {
-   char *status = 0;
-   argptr(0, &status, 4);
-   int* theStatus = (int*)status;
-
-//   return wait((int*)-1);
-   return wait(theStatus);
-
+  return wait();
 }
 
 int
@@ -94,48 +88,4 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
-}
-
-
-int
-sys_exit2(void)
-{
-    int status;
-    if (argint(0, &status) < 0)
-        return -1;
-    exit2(status);
-    return 0;
-
-   // exit2(0);
-   //  return 0;  // not reached
-}
-
-int
-sys_hello(void)
-{
-    hello();
-    return 0;
-}
-
-
-int
-sys_waitpid(void)
-{
-    int pid;
-
-    argint(0, &pid);
-
-    int* status;
-    if (argptr(1, (void*)&status, sizeof(status)) < 0)
-        return -1;
-    return waitpid(pid, status ,0);
-
-    //return waitpid(0, (int*)0 ,0);
-}
-
-int
-sys_updatePri(void)
-{
-
-    return updatePri();
 }
